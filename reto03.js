@@ -1,25 +1,12 @@
-// mode 05 3-stars
+// mode 06 4-stars
 function organizeInventory(inventory) {
-  let resp = {}
-  inventory.forEach(item => {     
-     if (!resp[item.category]) {
-      resp[item.category] = {}
-    }    
-    resp[item.category][item.name] = 
-      (resp[item.category][item.name] ?? 0) + item.quantity
-  })
-  return resp
-}
-// Mode 02 3-stars
-/*return inventory.reduce((resp, item) => {
-    if (!resp[item.category]) {
-      resp[item.category] = {}
-    }
-    resp[item.category][item.name] =
-      (resp[item.category][item.name] ?? 0) + item.quantity    
+  return inventory.reduce((resp, { category, name, quantity }) => {
+    resp[category] = resp[category] ?? {}
+    resp[category][name] =
+      (resp[category][name] ?? 0) + quantity    
     return resp
-  }, {})*/
-
+  }, {})
+}
 
 const inventary = [
   { name: 'doll', quantity: 5, category: 'toys' },
