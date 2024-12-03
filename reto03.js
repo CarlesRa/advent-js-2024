@@ -1,11 +1,12 @@
-// mode 04 3-stars
+// mode 05 3-stars
 function organizeInventory(inventory) {
   let resp = {}
-  inventory.forEach(item => {
-    Object.hasOwn(resp, item.category) ?
-      resp[item.category][item.name] = 
-        (resp[item.category][item.name] ?? 0) + item.quantity :
-       resp[item.category] = { [item.name]: item.quantity }   
+  inventory.forEach(item => {     
+     if (!resp[item.category]) {
+      resp[item.category] = {}
+    }    
+    resp[item.category][item.name] = 
+      (resp[item.category][item.name] ?? 0) + item.quantity
   })
   return resp
 }
