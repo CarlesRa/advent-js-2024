@@ -1,20 +1,29 @@
+// mode 03 2-stars
 function organizeInventory(inventory) {
-  let result = {}
+  let resp = {}
   inventory.forEach(item => {
-    if (Object.hasOwn(result, item.category)) {
-      if (Object.hasOwn(result[item.category], item.name)){
-        result[item.category][item.name] += item.quantity
-      } else {
-        result[item.category][item.name] = item.quantity
-      }
+    
+    if (Object.hasOwn(resp, item.category)) {      
+      resp[item.category][item.name] = 
+        (resp[item.category][item.name] ?? 0) + item.quantity
     } else {
-      result[item.category] = {
+      resp[item.category] = {
         [item.name]: item.quantity
       }
     }
   })
-  return result
+  return resp
 }
+// Mode 02 3-stars
+/*return inventory.reduce((resp, item) => {
+    if (!resp[item.category]) {
+      resp[item.category] = {}
+    }
+    resp[item.category][item.name] =
+      (resp[item.category][item.name] ?? 0) + item.quantity    
+    return resp
+  }, {})*/
+
 
 const inventary = [
   { name: 'doll', quantity: 5, category: 'toys' },
@@ -24,7 +33,7 @@ const inventary = [
   { name: 'racket', quantity: 4, category: 'sports' }
 ]
 
-console.log(organizeInventory(inventary));
+console.log(organizeInventory(inventary))
 
 const inventary2 = [
   { name: 'book', quantity: 10, category: 'education' },
@@ -32,4 +41,4 @@ const inventary2 = [
   { name: 'paint', quantity: 3, category: 'art' }
 ]
 
-console.log(organizeInventory(inventary2));
+console.log(organizeInventory(inventary2))
