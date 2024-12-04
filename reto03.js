@@ -1,10 +1,15 @@
-// mode 07 4-stars
+// mode 08 5-stars
 function organizeInventory(inventory) {
-  return inventory.reduce((organizedInventory, { category, name, quantity }) => {    
-    organizedInventory[category] = organizedInventory[category] ?? {}
-    organizedInventory[category][name] = (organizedInventory[category][name] ?? 0) + quantity
-    return organizedInventory;
-  }, {})
+  const organizedInventory = {};
+  for (const { category, name, quantity } of inventory) {
+    if (!organizedInventory[category]) {
+      organizedInventory[category] = {};
+    }
+    organizedInventory[category][name] = 
+      (organizedInventory[category][name] ?? 0) + quantity;
+  }
+  
+  return organizedInventory;
 }
 
 const inventary = [
