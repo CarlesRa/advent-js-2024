@@ -4,20 +4,19 @@
  */
 function organizeShoes(shoes) {
   const TYPE_I = 'I'
-  const TYPE_R = 'R'
+  const TYPE_R = 'R'  
+  const group = Object.groupBy(shoes, ({ type }) => type);
   const result = []
-  const group = Object.groupBy(shoes, ({ type }) => type)  
-  const hasPropertyY = TYPE_I in group
-  if (hasPropertyY) {
-    Object.values(group[TYPE_I]).forEach(({ size }) => {
-      const index = group[TYPE_R].findIndex(p => p?.size === size);
+  if (TYPE_I in group) {       
+    group[TYPE_I].forEach(({ size }) => {
+      const index = group[TYPE_R].findIndex(s => s?.size === size);
       if (index !== -1) {
         result.push(size)
         group[TYPE_R][index] = null
       }
     })
   }
-  return result    
+  return result;    
 }
 
 const shoes = [
