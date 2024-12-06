@@ -1,6 +1,6 @@
 # AdventJS 2024 - Retos de Programación
 
-¡Bienvenido a mi repositorio de **AdventJS**! 🎄 Este repositorio contiene mis soluciones a los retos diarios de **AdventJS** que se publican en **adventjs.dev**.
+¡Bienvenido a mi repositorio de **AdventJS**! 🎄 Este repositorio contiene mis soluciones a los retos diarios de [AdventJS](https://adventjs.dev/).
 
 Cada reto está numerado de la siguiente manera: `reto01.js`, `reto02.js`, etc. Puedes revisar las soluciones, aprender de ellas y, si te animas, intentar resolver los retos por ti mismo.
 
