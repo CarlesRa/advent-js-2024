@@ -3,15 +3,21 @@
  * @returns {number[]} Available shoes
  */
 function organizeShoes(shoes) {
-  const GROUP = Object.groupBy(shoes, ({ type }) => type);
-  const GROUP_R = GROUP['R']?.map(s => s.size)
-  const result = []
-  GROUP['I']?.forEach(({ size }) => {
-    if (!GROUP_R.includes(size)) { return }
-    result.push(size)
-    GROUP_R.splice(GROUP_R.indexOf(size), 1)
-  })
-  return result;
+  const sizeMap = new Map()
+  const pairedSizes = []
+
+  for (const { type, size } of shoes) {
+    const counters = sizeMap.get(size) ?? { I: 0, R: 0 };
+    counters[type]++
+    sizeMap.set(size, counters)
+    if (counters.I > 0 && counters.R > 0) {
+      counters.I--
+      counters.R--
+      pairedSizes.push(size)
+    }
+  }
+
+  return pairedSizes
 }
 
 const shoes = [
@@ -38,7 +44,7 @@ const shoes2 = [
   { type: 'R', size: 38 }
 ]
 
-console.log(organizeShoes(shoes2));
+console.log(organizeShoes(shoes2))
 
 const shoes3 = [
   { type: 'I', size: 38 },
