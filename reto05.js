@@ -1,22 +1,21 @@
 /**
  * @param {{ type: 'I' | 'R', size: number }[]} shoes
- * @returns {number[]} Available shoes 
+ * @returns {number[]} Available shoes
  */
 function organizeShoes(shoes) {
   const TYPE_I = 'I'
-  const TYPE_R = 'R'  
+  const TYPE_R = 'R'
   const group = Object.groupBy(shoes, ({ type }) => type);
   const result = []
-  if (TYPE_I in group) {       
-    group[TYPE_I].forEach(({ size }) => {
-      const index = group[TYPE_R].findIndex(s => s?.size === size);
-      if (index !== -1) {
-        result.push(size)
-        group[TYPE_R][index] = null
-      }
-    })
-  }
-  return result;    
+
+  group[TYPE_I]?.forEach(({ size }) => {
+    const index = group[TYPE_R].findIndex(s => s?.size === size);
+    if (index !== -1) {
+      result.push(size)
+      group[TYPE_R].splice(index, 1)
+    }
+  })
+  return result;
 }
 
 const shoes = [
@@ -24,7 +23,13 @@ const shoes = [
   { type: 'R', size: 38 },
   { type: 'R', size: 42 },
   { type: 'I', size: 41 },
-  { type: 'I', size: 42 }
+  { type: 'I', size: 42 },
+  { type: 'I', size: 42 },
+  { type: 'I', size: 42 },
+  { type: 'I', size: 42 },
+  { type: 'I', size: 42 },
+  { type: 'I', size: 42 },
+  { type: 'R', size: 42 },
 ]
 
 console.log(organizeShoes(shoes))
