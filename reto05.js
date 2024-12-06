@@ -5,14 +5,15 @@
 function organizeShoes(shoes) {
   const TYPE_I = 'I'
   const TYPE_R = 'R'
-  const group = Object.groupBy(shoes, ({ type }) => type);
+  const GROUP = Object.groupBy(shoes, ({ type }) => type);
+  const GROUP_TYPE_R = GROUP[TYPE_R]
   const result = []
 
-  group[TYPE_I]?.forEach(({ size }) => {
-    const index = group[TYPE_R].findIndex(s => s?.size === size);
+  GROUP[TYPE_I]?.forEach(({ size }) => {
+    const index = GROUP_TYPE_R.findIndex(s => s?.size === size);
     if (index !== -1) {
       result.push(size)
-      group[TYPE_R].splice(index, 1)
+      GROUP_TYPE_R.splice(index, 1)
     }
   })
   return result;
