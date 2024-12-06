@@ -3,17 +3,13 @@
  * @returns {number[]} Available shoes
  */
 function organizeShoes(shoes) {
-  const TYPE_I = 'I'
-  const TYPE_R = 'R'
   const GROUP = Object.groupBy(shoes, ({ type }) => type);
-  const GROUP_TYPE_R = GROUP[TYPE_R]
+  const GROUP_R = GROUP['R']?.map(s => s.size)
   const result = []
-
-  GROUP[TYPE_I]?.forEach(({ size }) => {
-    const index = GROUP_TYPE_R.findIndex(s => s?.size === size);
-    if (index === -1) { return }
+  GROUP['I']?.forEach(({ size }) => {
+    if (!GROUP_R.includes(size)) { return }
     result.push(size)
-    GROUP_TYPE_R.splice(index, 1)
+    GROUP_R.splice(GROUP_R.indexOf(size), 1)
   })
   return result;
 }
