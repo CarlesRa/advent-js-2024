@@ -11,10 +11,9 @@ function organizeShoes(shoes) {
 
   GROUP[TYPE_I]?.forEach(({ size }) => {
     const index = GROUP_TYPE_R.findIndex(s => s?.size === size);
-    if (index !== -1) {
-      result.push(size)
-      GROUP_TYPE_R.splice(index, 1)
-    }
+    if (index === -1) { return }
+    result.push(size)
+    GROUP_TYPE_R.splice(index, 1)
   })
   return result;
 }
