@@ -4,16 +4,16 @@
 function fixPackages(packages) {
   const stack = []
 
-  for (let i = 0; i < packages.length; i++) {
-    if (packages[i] !== ')') {
-      stack.push(packages[i])
-    } else {
+  for (const char of packages) {
+    if (char === ')') {
       const reversed = []
       while (stack[stack.length - 1] !== '(') {
         reversed.push(stack.pop())
       }
       stack.pop()
       stack.push(...reversed)
+    } else {
+      stack.push(char)
     }
   }
   console.log(stack.join(''))
