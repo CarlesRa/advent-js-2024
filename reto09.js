@@ -5,19 +5,15 @@
  */
 function moveTrain(board, mov) {
   const result = (char) => char === '·' ? 'none' : char === '*' ? 'eat' : 'crash'
-  let locomotivePosition
+
+  const directions = { U: [-1, 0], D: [1, 0], L: [0, -1], R: [0, 1] }
+  const [dx, dy] = directions[mov]
+
   for (let i = 0; i < board.length; i++) {
-    locomotivePosition = board[i].split('').indexOf('@');
+    const locomotivePosition = board[i].indexOf('@')
     if (locomotivePosition !== -1) {
-      if (mov === 'U') {
-        return result(board[i - 1]?.charAt(locomotivePosition))
-      } else if (mov === 'D') {
-        return result(board[i + 1]?.charAt(locomotivePosition))
-      } else if (mov === 'L') {
-        return result(board[i]?.charAt(locomotivePosition - 1))
-      } else {
-        return result(board[i]?.charAt(locomotivePosition + 1))
-      }
+      const newRow = board[i + dx]?.[locomotivePosition + dy]
+      return result(newRow)
     }
   }
 }
