@@ -4,18 +4,16 @@
  * @returns {'none' | 'crash' | 'eat'}
  */
 function moveTrain(board, mov) {
-  const result = (char) => char === '·' ? 'none' : char === '*' ? 'eat' : 'crash'
-
   const directions = { U: [-1, 0], D: [1, 0], L: [0, -1], R: [0, 1] }
   const [dx, dy] = directions[mov]
 
-  for (let i = 0; i < board.length; i++) {
-    const locomotivePosition = board[i].indexOf('@')
-    if (locomotivePosition !== -1) {
-      const newRow = board[i + dx]?.[locomotivePosition + dy]
-      return result(newRow)
-    }
-  }
+  const i = board.findIndex(row => row.includes('@'))
+  if (i === -1) return 'none'
+
+  const locomotivePosition = board[i].indexOf('@')
+  const newRow = board[i + dx]?.[locomotivePosition + dy]
+
+  return newRow === '·' ? 'none' : newRow === '*' ? 'eat' : 'crash'
 }
 
 const board = ['·····', '*····', '@····', 'o····', 'o····']
