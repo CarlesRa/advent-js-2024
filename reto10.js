@@ -3,26 +3,23 @@
  * @returns {number} The value of the register A
  */
 function compile(instructions) {
-  const registries = { A: undefined }
-
+  const records = { A: undefined }
   for (let i = 0; i < instructions.length; i++) {
     const [command, ...args] = instructions[i].split(' ')
+    const [source, target] = args
     if (command === 'MOV') {
-      const [source, target] = args
-      const value = isNaN(source) ? registries[source] ?? 0 : Number(source)
-      registries[target] = value
+      const value = isNaN(source) ? records[source] ?? 0 : Number(source)
+      records[target] = value
     } else if (command === 'INC' || command === 'DEC') {
-      const [reg] = args
-      registries[reg] = (registries[reg] ?? 0) + (command === 'INC' ? 1 : -1)
+      records[source] = (records[source] ?? 0) + (command === 'INC' ? 1 : -1)
     } else if (command === 'JMP') {
-      const [reg, target] = args
       const jumpIndex = Number(target) - 1
-      if ((registries[reg] ?? 0) === 0 && jumpIndex >= -1) {
+      if ((records[source] ?? 0) === 0 && jumpIndex >= -1) {
         i = jumpIndex
       }
     }
   }
-  return registries.A
+  return records.A
 }
 
 const instructions = [
