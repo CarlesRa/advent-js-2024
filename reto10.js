@@ -8,7 +8,7 @@ function compile(instructions) {
     const [command, ...args] = instructions[i].split(' ')
     const [source, target] = args
     if (command === 'MOV') {
-      const value = isNaN(source) ? records[source] ?? 0 : Number(source)
+      const value = isNaN(source) ? records[source] : Number(source)
       records[target] = value
     } else if (command === 'INC' || command === 'DEC') {
       records[source] = (records[source] ?? 0) + (command === 'INC' ? 1 : -1)
