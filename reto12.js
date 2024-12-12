@@ -3,15 +3,14 @@
  */
 function calculatePrice(ornaments) {
   const checker = { '*': 1, 'o': 5, '^': 10, '#': 50, '@': 100}
-  let oldValue
   let result = 0
+  let oldValue
   for (let i = (ornaments.length - 1); i >= 0; i--) {
-    const ornament = ornaments.charAt(i)
-    const value = checker[ornament]
+    const value = checker[ornaments.charAt(i)]
     if (!value) {
       return value
     }
-    oldValue && oldValue > value ? result -= value : result += value
+    oldValue > value ? result -= value : result += value
     oldValue = value
   }
   return result
