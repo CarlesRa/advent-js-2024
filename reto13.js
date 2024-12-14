@@ -2,10 +2,7 @@
  * @returns {true|[number, number]} Return true if robot returns or position
  */
 function isRobotBack(moves) {
-  let position = [0, 0]
-  let isDouble = false
-  let isInverted = false
-  let restrictMovement = false
+  let position =  [0, 0]
   let moveValue = 1
   let lastMove
   const handler = {
@@ -13,25 +10,24 @@ function isRobotBack(moves) {
     L: () => position[0] -= moveValue,
     U: () => position[1] += moveValue,
     D: () => position[1] -= moveValue,
-    '*': () => isDouble = true,
-    '!': () => isInverted = true,
-    '?': () => {
-      restrictMovement = true
-      return true
-    }
+    '*': false,
+    '!': false,
+    '?': false
   }
   for (let move of moves) {
-    if (isDouble) {
-      moveValue = 2
-      isDouble = false
-    }
-    if (isInverted) {
-      moveValue = -1
-      handler[move]()
-      isInverted = false
+    if (move === '*' || move === '!' || move === '?') {
+      handler[move] = true
       continue
     }
-    if (restrictMovement) {
+    if (handler['*']) {
+      moveValue = 2
+      handler['*'] = false
+    } else if (handler['!']) {
+      moveValue = -1
+      handler[move]()
+      handler['!'] = false
+      continue
+    } else if (handler['?']) {
       if (lastMove !== move) {
         moveValue = 1
         handler[move]()
@@ -40,7 +36,7 @@ function isRobotBack(moves) {
     }
     handler[move]()
     moveValue = 1
-    if (restrictMovement) continue
+    if (handler['?']) continue
     lastMove = move
   }
   return position[0] === 0 && position[1] === 0 ? true : position
