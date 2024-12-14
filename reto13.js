@@ -6,16 +6,13 @@ function isRobotBack(moves) {
   let isDouble = false
   let isInverted = false
   let restrictMovement = false
+  let moveValue = 1
   let lastMove
   const handler = {
-    R: () => position[0] += 1,
-    L: () => position[0] -= 1,
-    U: () => position[1] += 1,
-    D: () => position[1] -= 1,
-    RI: () => position[0] -= 1,
-    LI: () => position[0] += 1,
-    UI: () => position[1] -= 1,
-    DI: () => position[1] += 1,
+    R: () => position[0] += moveValue,
+    L: () => position[0] -= moveValue,
+    U: () => position[1] += moveValue,
+    D: () => position[1] -= moveValue,
     '*': () => isDouble = true,
     '!': () => isInverted = true,
     '?': () => {
@@ -25,21 +22,24 @@ function isRobotBack(moves) {
   }
   for (let move of moves) {
     if (isDouble) {
-      handler[move]()
+      moveValue = 2
       isDouble = false
     }
     if (isInverted) {
-      handler[`${move}I`]()
+      moveValue = -1
+      handler[move]()
       isInverted = false
       continue
     }
     if (restrictMovement) {
       if (lastMove !== move) {
+        moveValue = 1
         handler[move]()
       }
       continue
     }
     handler[move]()
+    moveValue = 1
     if (restrictMovement) continue
     lastMove = move
   }
