@@ -2,6 +2,7 @@
  * @returns {true|[number, number]} Return true if robot returns or position
  */
 function isRobotBack(moves) {
+  const specialsChars = '*!?'
   let position =  [0, 0]
   let moveValue = 1
   let lastMove
@@ -15,7 +16,8 @@ function isRobotBack(moves) {
     '?': false
   }
   for (let move of moves) {
-    if (move === '*' || move === '!' || move === '?') {
+    moveValue = 1
+    if (specialsChars.includes(move)) {
       handler[move] = true
       continue
     }
@@ -29,13 +31,11 @@ function isRobotBack(moves) {
       continue
     } else if (handler['?']) {
       if (lastMove !== move) {
-        moveValue = 1
         handler[move]()
       }
       continue
     }
     handler[move]()
-    moveValue = 1
     if (handler['?']) continue
     lastMove = move
   }
