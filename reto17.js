@@ -3,18 +3,25 @@
  * @returns {number[][]}
  */
 function detectBombs(grid) {
-  const directions = [
-    [0, 1], [0, -1], [1, 0], [-1, 0],
-    [1, 1], [1, -1], [-1, 1], [-1, -1]
-  ];
-
-  return grid.map((row, rowIndex) =>
-    row.map((_, colIndex) =>
-      directions.reduce((bombCount, [dRow, dCol]) =>
-        bombCount + (grid[rowIndex + dRow]?.[colIndex + dCol] ?? 0)
-      , 0)
-    )
-  );
+  const rows = grid.length
+  const cols = grid[0].length
+  const result = Array(rows)
+  for (let rowIndex = 0; rowIndex < rows; rowIndex++) {
+    const rowResult = Array(cols)
+    for (let colIndex = 0; colIndex < cols; colIndex++) {
+      rowResult[colIndex] =
+        (grid[rowIndex-1]?.[colIndex-1] | 0) +
+        (grid[rowIndex-1]?.[colIndex] | 0) +
+        (grid[rowIndex-1]?.[colIndex+1] | 0) +
+        (grid[rowIndex]?.[colIndex-1] | 0) +
+        (grid[rowIndex]?.[colIndex+1] | 0) +
+        (grid[rowIndex+1]?.[colIndex-1] | 0) +
+        (grid[rowIndex+1]?.[colIndex] | 0) +
+        (grid[rowIndex+1]?.[colIndex+1] | 0)
+    }
+    result[rowIndex] = rowResult
+  }
+  return result
 }
 
 console.table(
