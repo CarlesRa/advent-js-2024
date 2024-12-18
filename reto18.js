@@ -8,13 +8,12 @@ function findInAgenda(agenda, phone) {
   const agendaFiltered = agendaList.filter(a => a.includes(phone))
   if (agendaFiltered.length === 0 || agendaFiltered.length > 1) return null
   const index = agendaList.findIndex(contact => contact.includes(phone))
-  const nameAndDirection = agendaList[index].split(
-    /\+?\d+-\d{3}-\d{3}-\d{3}/).filter(a => a !== '').join('')
-  const nameDirectionList = nameAndDirection.split(/<([^<>]+)>/).filter(n => n !== '')
-  const nameIndex = nameDirectionList.findIndex(n => n.split(' ').length === 2)
+  const nameAdress = agendaList[index].split(
+    /\+?\d+-\d{3}-\d{3}-\d{3}/).join('').split(/<([^<>]+)>/).filter(n => n !== '')
+  const nameIndex = nameAdress.findIndex(n => n.split(' ').length === 2)
   return {
-    name:nameDirectionList[nameIndex],
-    address: nameDirectionList[(nameIndex > 0 ? 0 : 1)].trim()
+    name:nameAdress[nameIndex],
+    address: nameAdress[(nameIndex > 0 ? 0 : 1)].trim()
   }
 }
 
