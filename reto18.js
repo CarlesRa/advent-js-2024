@@ -6,7 +6,7 @@
 function findInAgenda(agenda, phone) {
   const agendaList = agenda.split('\n')
   const agendaFiltered = agendaList.filter(a => a.includes(phone))
-  if (agendaFiltered.length === 0 || agendaFiltered.length > 1) return null
+  if (agendaFiltered.length !== 1) return null
   const index = agendaList.findIndex(contact => contact.includes(phone))
   const nameAdress = agendaList[index].split(
     /\+?\d+-\d{3}-\d{3}-\d{3}/).join('').split(/<([^<>]+)>/).filter(n => n !== '')
