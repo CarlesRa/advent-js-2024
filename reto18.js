@@ -5,16 +5,12 @@
  */
 function findInAgenda(agenda, phone) {
   const agendaList = agenda.split('\n')
-  const agendaFiltered = agendaList.filter(a => a.includes(phone))
-  if (agendaFiltered.length !== 1) return null
-  const index = agendaList.findIndex(contact => contact.includes(phone))
-  const nameAdress = agendaList[index].split(
-    /\+?\d+-\d{3}-\d{3}-\d{3}/).join('').split(/<([^<>]+)>/).filter(n => n !== '')
-  const nameIndex = nameAdress.findIndex(n => n.split(' ').length === 2)
-  return {
-    name:nameAdress[nameIndex],
-    address: nameAdress[(nameIndex > 0 ? 0 : 1)].trim()
-  }
+  if (agendaList.filter(a => a.includes(phone)).length !== 1) return null
+  const contact = agendaList.find(a => a.includes(phone))
+  const parts = contact.replace(/\+?\d+-\d{3}-\d{3}-\d{3}/, '').split(/<([^<>]+)>/).filter(Boolean)
+  const name = parts.find(p => p.split(' ').length === 2)
+  const address = parts.find(p => p !== name)
+  return { name: name.trim(), address: address.trim() }
 }
 
 const agenda = `+34-600-123-456 Calle Gran Via 12 <Juan Perez>
