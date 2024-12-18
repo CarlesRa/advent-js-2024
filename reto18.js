@@ -4,12 +4,10 @@
  * @returns {{ name: string, address: string } | null}
  */
 function findInAgenda(agenda, phone) {
-  const agendaList = agenda.split('\n')
-  if (agendaList.filter(a => a.includes(phone)).length !== 1) return null
-  const contact = agendaList.find(a => a.includes(phone))
-  const parts = contact.replace(/\+?\d+-\d{3}-\d{3}-\d{3}/, '').split(/<([^<>]+)>/).filter(Boolean)
-  const name = parts.find(p => p.split(' ').length === 2)
-  const address = parts.find(p => p !== name)
+  const matches = agenda.split('\n').filter(a => a.includes(phone))
+  if (matches.length !== 1) return null
+  const [, address = '', name = ''] =
+    matches[0].replace(/\+?\d+-\d{3}-\d{3}-\d{3}/, '').match(/(.*?)(?:<([^<>]+)>)/)
   return { name: name.trim(), address: address.trim() }
 }
 
