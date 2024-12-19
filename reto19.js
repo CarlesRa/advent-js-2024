@@ -4,41 +4,37 @@
  */
 function distributeWeight(weight) {
   const boxRepresentations = {
-    1: [" _ ", "|_|"] ,
+    1: [" _ ", "|_|"],
     2: [" ___ ", "|___|"],
     5: [" _____ ", "|     |", "|_____|"],
     10: [" _________ ", "|         |", "|_________|"]
-  }
-  // distribute in boxes
+  };
   const resultBoxes = {}
-  const boxCapacities = [10, 5, 2, 1]
-  let indexCapacity = 0
-  while(weight > 0) {
-    const capacity = boxCapacities[indexCapacity]
-    if (weight - boxCapacities[indexCapacity] >= 0) {
-      weight -= capacity
-      resultBoxes[capacity] = (resultBoxes[capacity] | 0) + 1
-      continue
+  const boxCapacities =
+    Object.keys(boxRepresentations).map(Number).sort((a, b) => b - a)
+  for (const capacity of boxCapacities) {
+    while (weight >= capacity) {
+      weight -= capacity;
+      resultBoxes[capacity] = (resultBoxes[capacity] || 0) + 1
     }
-    indexCapacity++
   }
-  // paint boxes
-  let boxes = []
+  const boxes = []
   const keys = Object.keys(resultBoxes)
-  keys.forEach((key, index) => {
-    for (let i = 0; i < resultBoxes[key]; i++) {
-      let box = []
-      if (index > 0 || i > 0) {
-        box = boxRepresentations[key].slice(1)
-      } else {
-        box = boxRepresentations[key]
-      }
-      if (index < keys.length - 1) {
-        box[box.length - 1] += boxRepresentations[keys[index + 1]][0].trim().slice(box[box.length - 1].length - 1)
+  for (let i = 0; i < keys.length; i++) {
+    const key = keys[i]
+    const nextKey = keys[i + 1]
+    const boxCount = resultBoxes[key]
+    for (let j = 0; j < boxCount; j++) {
+      const isFirstBox = j === 0 && i === 0
+      const box = isFirstBox ? boxRepresentations[key] : boxRepresentations[key].slice(1)
+      if (nextKey) {
+        const lastLine = box[box.length - 1]
+        const topNextBox = boxRepresentations[nextKey][0].trim()
+        box[box.length - 1] = lastLine + topNextBox.slice(lastLine.length - 1)
       }
       boxes.push(...box)
     }
-  })
+  }
   return boxes.join('\n')
 }
 
