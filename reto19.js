@@ -11,16 +11,16 @@ function distributeWeight(weight) {
   }
   // distribute in boxes
   const resultBoxes = {}
-  const boxCapacities = [1, 2, 5, 10]
-  let indexCapacity = boxCapacities.length - 1
+  const boxCapacities = [10, 5, 2, 1]
+  let indexCapacity = 0
   while(weight > 0) {
     const capacity = boxCapacities[indexCapacity]
     if (weight - boxCapacities[indexCapacity] >= 0) {
       weight -= capacity
       resultBoxes[capacity] = (resultBoxes[capacity] | 0) + 1
-    } else {
-      indexCapacity--
+      continue
     }
+    indexCapacity++
   }
   // paint boxes
   let boxes = []
@@ -29,9 +29,9 @@ function distributeWeight(weight) {
     for (let i = 0; i < resultBoxes[key]; i++) {
       let box = []
       if (index > 0 || i > 0) {
-        box = [...boxRepresentations[key].slice(1)]
+        box = boxRepresentations[key].slice(1)
       } else {
-        box = [...boxRepresentations[key]]
+        box = boxRepresentations[key]
       }
       if (index < keys.length - 1) {
         box[box.length - 1] += boxRepresentations[keys[index + 1]][0].trim().slice(box[box.length - 1].length - 1)
