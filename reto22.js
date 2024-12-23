@@ -4,14 +4,12 @@
  */
 function generateGiftSets(gifts) {
   const result = []
-  function backtrack(currentCombination, startIndex) {
-    if (currentCombination.length > 0) {
-      result.push([...currentCombination]);
-    }
-    for (let i = startIndex; i < gifts.length; i++) {
-      currentCombination.push(gifts[i])
-      backtrack(currentCombination, i + 1)
-      currentCombination.pop()
+  function backtrack(combination, start) {
+    for (let i = start; i < gifts.length; i++) {
+      combination.push(gifts[i])
+      result.push([...combination])
+      backtrack(combination, i + 1)
+      combination.pop()
     }
   }
   backtrack([], 0)
