@@ -5,13 +5,8 @@
 function findMissingNumbers(nums) {
   const numSet = new Set(nums)
   const max = Math.max(...nums)
-  const result = []
-  for (let i = 1; i < max; i++) {
-    if (!numSet.has(i)) {
-      result.push(i)
-    }
-  }
-  return result
+  return Array.from({ length: max }, (_, i) => i + 1)
+    .filter(num => !numSet.has(num))
 }
 
 console.log(findMissingNumbers([1, 2, 4, 6]))
