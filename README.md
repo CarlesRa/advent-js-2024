@@ -31,6 +31,9 @@ Cada reto está numerado de la siguiente manera: `reto01.js`, `reto02.js`, etc. 
 19. [Reto 19](reto19.js)
 20. [Reto 20](reto20.js)
 21. [Reto 21](reto21.js)
+22. [Reto 22](reto22.js)
+23. [Reto 23](reto23.js)
+24. [Reto 24](reto24.js)
 
 ---
 
