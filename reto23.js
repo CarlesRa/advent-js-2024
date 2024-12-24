@@ -3,10 +3,11 @@
  * @returns {number[]} - List of missing numbers.
  */
 function findMissingNumbers(nums) {
+  const numSet = new Set(nums)
   const max = Math.max(...nums)
   const result = []
   for (let i = 1; i < max; i++) {
-    if (nums.indexOf(i) === -1) {
+    if (!numSet.has(i)) {
       result.push(i)
     }
   }
