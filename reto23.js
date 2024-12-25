@@ -3,10 +3,7 @@
  * @returns {number[]} - List of missing numbers.
  */
 function findMissingNumbers(nums) {
-  const numSet = new Set(nums)
-  const max = Math.max(...nums)
-  return Array.from({ length: max }, (_, i) => i + 1)
-    .filter(num => !numSet.has(num))
+  return Array.from({length: Math.max(...nums) }, (_, i) => i + 1).filter(n => !nums.includes(n))
 }
 
 console.log(findMissingNumbers([1, 2, 4, 6]))
